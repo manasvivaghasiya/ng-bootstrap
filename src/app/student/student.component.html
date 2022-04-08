@@ -1,0 +1,124 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <button class="btn btn-lg btn-outline-primary" (click)="open(content);">Add New</button>
+          <br /><br />
+          <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+              <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Hobbies</th>
+                <th>Gender</th>
+                <th>City</th>
+                <th>Age</th>            
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of studentList">
+                  <td>{{item.firstName}}</td>
+                  <td>{{item.lastName}}</td>
+                  <td>{{item.hobbies}}</td>
+                  <td>{{item.gender}}</td>              
+                  <td>{{item.city}}</td> 
+                  <td>{{item.age}}</td> 
+                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent(dataStudent)">Edit</button></td>
+                  <td><button class="btn  btn-outline-primary" (click)="deleteStudent(item._id)" >Delete</button></td>
+                </tr>
+              </tbody>
+            </table>
+    
+          </div>
+        </div>
+      </div>
+</div>
+
+ <!-- -----------------------Form------------------------ -->
+ <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Student Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form class="px-4 py-3" [formGroup]="studentData" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="">First Name:</label>
+              <input type="text" class="form-control" formControlName="firstName"  id="firstName" placeholder="firstName" autocomplete="">
+            </div>
+            <div class="mb-3">
+                <label for="">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="lastName" autocomplete="">
+            </div>
+            <div class="mb-3">
+                <label for="">Hobbies:</label>
+                <div class="form-check form-check-inline">
+                    <input
+                      mdbCheckbox
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox1"
+                      value="option1"
+                      formControlName="hobbies"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox1">Sports</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      mdbCheckbox
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      value="option2"
+                      formControlName="hobbies"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox2">Playing</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      mdbCheckbox
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inlineCheckbox2"
+                      value="option2"
+                      formControlName="hobbies"
+                    />
+                    <label class="form-check-label" for="inlineCheckbox2">Music</label>
+                  </div>
+                
+            </div>
+            <div class="mb-3">
+                <label for="">Gender:</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="defaultUnchecked" name="defaultExampleRadios" mdbInput>
+                    <label class="custom-control-label" for="defaultUnchecked">Female</label>
+                  </div>
+                  <!-- Default checked -->
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="defaultChecked" name="defaultExampleRadios" checked mdbInput>
+                    <label class="custom-control-label" for="defaultChecked">Male</label>
+                  </div>
+            </div>
+            <div class="mb-3">
+                <label for="">City:</label>
+                <select class="browser-default custom-select form-control" formControlName="city">
+                    <option selected>City</option>
+                    <option value="1">surat</option>
+                    <option value="2">vadodara</option>
+                    <option value="3">ahmedabad</option>
+                  </select>
+                
+            </div>
+            <div class="mb-3">
+                <label for="">Age</label>
+                <input type="number" class="form-control" formControlName="age" id="Age" placeholder="Age" autocomplete="">
+            </div>
+           
+     
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="addStudent(); modal.close('Save click')">save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">cancle</button>
+    </div>
+  </ng-template>
+  
