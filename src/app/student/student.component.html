@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" style="width: 100%;">
             <button class="btn btn-lg btn-outline-primary" (click)="open(content);">Add New</button>
           <br /><br />
           <div class="table-responsive">
@@ -22,7 +22,7 @@
                   <td>{{item.gender}}</td>              
                   <td>{{item.city}}</td> 
                   <td>{{item.age}}</td> 
-                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent(item)">Edit</button></td>
+                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent()">Edit</button></td>
                   <td><button class="btn  btn-outline-primary" (click)="deleteStudent(item._id)" >Delete</button></td>
                 </tr>
               </tbody>
@@ -51,14 +51,14 @@
             </div>
             <div class="mb-3">
                 <label for="">Hobbies:</label>
-                <div class="form-check form-check-inline">
+                <!-- <div class="form-check form-check-inline">
                     <input
                       mdbCheckbox
                       class="form-check-input"
                       type="checkbox"
                       id="inlineCheckbox1"
-                      value="option1"
-                      formControlName="hobbies"
+                      value="sports"
+                      formControlName="sports"
                     />
                     <label class="form-check-label" for="inlineCheckbox1">Sports</label>
                   </div>
@@ -68,8 +68,8 @@
                       class="form-check-input"
                       type="checkbox"
                       id="inlineCheckbox2"
-                      value="option2"
-                      formControlName="hobbies"
+                      value="playing"
+                      formControlName="playing"
                     />
                     <label class="form-check-label" for="inlineCheckbox2">Playing</label>
                   </div>
@@ -78,33 +78,36 @@
                       mdbCheckbox
                       class="form-check-input"
                       type="checkbox"
-                      id="inlineCheckbox2"
-                      value="option2"
-                      formControlName="hobbies"
+                      id="inlineCheckbox3"
+                      value="music"
+                      formControlName="music"
                     />
-                    <label class="form-check-label" for="inlineCheckbox2">Music</label>
-                  </div>
-                
+                    <label class="form-check-label" for="inlineCheckbox3">Music</label>
+                  </div> -->
+                  <div *ngFor="let hobbies of hobbies">
+                    <input type="checkbox" formControlName="hobbies" value="hobbies">
+                    <span>{{hobbies}}</span>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="">Gender:</label>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="defaultUnchecked" name="defaultExampleRadios" mdbInput>
-                    <label class="custom-control-label" for="defaultUnchecked">Female</label>
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="Female" name="Female" value="Female" mdbInput>
+                    <label class="custom-control-label" for="Female">Female</label>
                   </div>
                   <!-- Default checked -->
                   <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="defaultChecked" name="defaultExampleRadios" checked mdbInput>
-                    <label class="custom-control-label" for="defaultChecked">Male</label>
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="Male" name="Male" value="Male" checked mdbInput>
+                    <label class="custom-control-label" for="Male">Male</label>
                   </div>
             </div>
             <div class="mb-3">
                 <label for="">City:</label>
                 <select class="browser-default custom-select form-control" formControlName="city">
                     <option selected>City</option>
-                    <option value="1">surat</option>
-                    <option value="2">vadodara</option>
-                    <option value="3">ahmedabad</option>
+                    <option value="surat">surat</option>
+                    <option value="vadodara">vadodara</option>
+                    <option value="ahmedabad">ahmedabad</option>
                   </select>
                 
             </div>

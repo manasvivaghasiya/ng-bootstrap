@@ -18,7 +18,7 @@ export class StudentComponent implements OnInit {
   editInfo!: any;
   couponForm: any;
   studentId: any;
-
+  hobbies = ["sports", "playing", "music", "reading"];
   constructor(private modalService: NgbModal,private http:HttpClient,  private fb: FormBuilder,) { }
 
   ngOnInit(): void {
@@ -26,7 +26,8 @@ export class StudentComponent implements OnInit {
   this.studentData= this.fb.group({
     firstName:[''],
     lastName:[''],
-    hobbies:[''],
+    // hobbies:[''],
+    hobbies   : this.fb.array(["sports"]),
     gender:[''],
     city:[''],
     age:[''],
@@ -103,14 +104,17 @@ export class StudentComponent implements OnInit {
   //   this.studentData = dataStudent
   // }
 
-  editStudent(data:any){
-    debugger
+  // editStudent(data:any){
+  //   debugger
   //  let firstName = this.studentData.get('firstName')?.value
-  this.studentId = data.id;
+  // this.studentId = data.id;
   // this.studentData.value.get ('firstName').setValue(data.firstName);
-  let firstName = this.studentData.value.get('firstName')?.value;
-   this.studentData.value.setValue(firstName);
-  }
+  // let firstName = this.studentData.value.get('firstName')?.value;
+  //  this.studentData.value.setValue(firstName);
+  // }
 
+  editStudent(){
+    
+  }
 }
 
