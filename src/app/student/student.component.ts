@@ -17,6 +17,7 @@ export class StudentComponent implements OnInit {
   studentData!:FormGroup;
   editInfo!: any;
   couponForm: any;
+  studentId: any;
 
   constructor(private modalService: NgbModal,private http:HttpClient,  private fb: FormBuilder,) { }
 
@@ -77,7 +78,7 @@ export class StudentComponent implements OnInit {
 
   addStudent(){
     debugger
-    if(this.editInfo){
+    if(this.studentId){
       this.updateStudent()
     }
      this.http.post(`${environment.apiProduct}/student/add`,this.studentData.value)
@@ -103,10 +104,12 @@ export class StudentComponent implements OnInit {
   // }
 
   editStudent(data:any){
-    
+    debugger
   //  let firstName = this.studentData.get('firstName')?.value
-  this.studentData.get ('firstName').setValue(data.firstName);
- 
+  this.studentId = data.id;
+  // this.studentData.value.get ('firstName').setValue(data.firstName);
+  let firstName = this.studentData.value.get('firstName')?.value;
+   this.studentData.value.setValue(firstName);
   }
 
 }

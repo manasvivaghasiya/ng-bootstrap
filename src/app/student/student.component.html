@@ -22,7 +22,7 @@
                   <td>{{item.gender}}</td>              
                   <td>{{item.city}}</td> 
                   <td>{{item.age}}</td> 
-                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent(dataStudent)">Edit</button></td>
+                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent(item)">Edit</button></td>
                   <td><button class="btn  btn-outline-primary" (click)="deleteStudent(item._id)" >Delete</button></td>
                 </tr>
               </tbody>
@@ -43,7 +43,7 @@
         <form class="px-4 py-3" [formGroup]="studentData" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="">First Name:</label>
-              <input type="text" class="form-control" formControlName="firstName"  id="firstName" placeholder="firstName" autocomplete="">
+              <input type="text" class="form-control"  value="firstName" formControlName="firstName"  id="firstName" placeholder="firstName" autocomplete="">
             </div>
             <div class="mb-3">
                 <label for="">Last Name</label>
