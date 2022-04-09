@@ -3,6 +3,7 @@ import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bo
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup } from '@angular/forms';
+// import { debug } from 'console';
 
 
 @Component({
@@ -11,14 +12,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-
+  showModal: any
   closeResult = '';
   studentList:any;
   studentData!:FormGroup;
   editInfo!: any;
-  couponForm: any;
   studentId: any;
   hobbies = ["sports", "playing", "music", "reading"];
+  studentInfo: any;
   constructor(private modalService: NgbModal,private http:HttpClient,  private fb: FormBuilder,) { }
 
   ngOnInit(): void {
@@ -27,7 +28,7 @@ export class StudentComponent implements OnInit {
     firstName:[''],
     lastName:[''],
     // hobbies:[''],
-    hobbies   : this.fb.array(["sports"]),
+    hobbies   : this.fb.array(["sports","playing"]),
     gender:[''],
     city:[''],
     age:[''],
@@ -58,28 +59,23 @@ export class StudentComponent implements OnInit {
 
   }
   getStudent(){
-    debugger
     this.http.get(`${environment.apiProduct}/student/get`).subscribe((res:any)=>{
       this.studentList = res.data
-      console.log(this.studentList)
     })
   }
 
   deleteStudent(id:string){
-    debugger
     this.http.delete(`${environment.apiProduct}/student/delete?id=${id}`)
     .subscribe((res:any)=>{
-     
+     this.studentInfo = null
         alert('data SuccessFully delete')
         this.getStudent()
-        
-        console.log(res);
     });
   }
 
   addStudent(){
     debugger
-    if(this.studentId){
+    if(this.studentInfo){
       this.updateStudent()
     }
      this.http.post(`${environment.apiProduct}/student/add`,this.studentData.value)
@@ -87,16 +83,24 @@ export class StudentComponent implements OnInit {
       alert('data successfully add');
      this.getStudent();
      this.studentData.reset();
+     
     });
+  
   }
 
   updateStudent(){
-    this.http.post(`${environment.apiProduct}/student/update`,this.studentData.value)
+    debugger
+      this.http.post(`${environment.apiProduct}/student/update`,{
+        ...this.studentInfo,
+        id:this.studentInfo.id,
+        ...this.studentData.value,
+      })
     .subscribe((res:any)=>{
+      this.studentInfo=null
       alert('data Successfully update');
       this.getStudent();
       this.studentData.reset();
-    })
+    });
   }
 
   // editStudent(dataStudent:any){
@@ -113,8 +117,52 @@ export class StudentComponent implements OnInit {
   //  this.studentData.value.setValue(firstName);
   // }
 
-  editStudent(){
-    
+  editStudent(dataStudent:any){
+    // this.studentInfo = null;
+    debugger
+    this.studentInfo = dataStudent
+    console.log(this.studentList);
+    var result = this.studentList.filter((x: { _id: any; }) => x._id == this.studentInfo);
+    console.log(result);
+    let first_name = result[0].firstName;
+    let last_name = result[0].lastName;
+    let hobbies_name = result[0].hobbies;
+    let gender_name = result[0].gender;
+    let city_name = result[0].city;
+    let age = result[0].age;
+    // console.log(first_name);
+    console.log(hobbies_name,age,gender_name);
+    // let first_name = this.studentData.get('firstName')?.value;
+    // let last_name = this.studentData.get('lastName')?.value;
+    this.studentData.patchValue({
+      firstName:first_name,
+      lastName:last_name,
+      hobbies:hobbies_name,
+      gender:gender_name,
+      city:city_name,
+      age:age
+
+      
+      // lastName:dataStudent.lastName,
+      // hobbies:dataStudent.hobbies,
+      // gender:dataStudent.gender,
+      // city:dataStudent.city,
+      // age:dataStudent.age,
+
+ })
+  // this.studentData.value.get ('firstName').setValue(dataStudent.firstName);
+  // this.studentData.value.setValue(dataStudent.firstName);
+
   }
 }
+
+// export interface dataStudent{
+//   firstName:string;
+//   lastName:string;
+//   hobbies:string;
+//   gender:string;
+//   city:string;
+//   age:string;
+//   _id:string;
+// }
 

@@ -22,7 +22,7 @@
                   <td>{{item.gender}}</td>              
                   <td>{{item.city}}</td> 
                   <td>{{item.age}}</td> 
-                  <td><button class="btn  btn-outline-primary"  (click)="open(content); editStudent()">Edit</button></td>
+                  <td><button class="btn  btn-outline-primary" data-toggle="modal" (click)="open(content); editStudent(item._id)">Edit</button></td>
                   <td><button class="btn  btn-outline-primary" (click)="deleteStudent(item._id)" >Delete</button></td>
                 </tr>
               </tbody>
@@ -34,7 +34,7 @@
 </div>
 
  <!-- -----------------------Form------------------------ -->
- <ng-template #content let-modal>
+ <ng-template #content let-modal >
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Student Details</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -47,7 +47,7 @@
             </div>
             <div class="mb-3">
                 <label for="">Last Name</label>
-                <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="lastName" autocomplete="">
+                <input type="text" class="form-control"   value="lastName" formControlName="lastName" id="lastName" placeholder="lastName" autocomplete="">
             </div>
             <div class="mb-3">
                 <label for="">Hobbies:</label>
@@ -90,14 +90,18 @@
                 </div>
             </div>
             <div class="mb-3">
+              <label for="">Age</label>
+              <input type="number" class="form-control" value="age" formControlName="age" id="age" placeholder="Age" autocomplete="">
+          </div>
+            <div class="mb-3">
                 <label for="">Gender:</label>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="Female" name="Female" value="Female" mdbInput>
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="Female" name="gender" value="Female" mdbInput>
                     <label class="custom-control-label" for="Female">Female</label>
                   </div>
                   <!-- Default checked -->
                   <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="Male" name="Male" value="Male" checked mdbInput>
+                    <input type="radio" class="custom-control-input" formControlName="gender" id="Male" name="gender" value="Male" checked mdbInput>
                     <label class="custom-control-label" for="Male">Male</label>
                   </div>
             </div>
@@ -111,10 +115,7 @@
                   </select>
                 
             </div>
-            <div class="mb-3">
-                <label for="">Age</label>
-                <input type="number" class="form-control" formControlName="age" id="Age" placeholder="Age" autocomplete="">
-            </div>
+
            
      
           </form>
