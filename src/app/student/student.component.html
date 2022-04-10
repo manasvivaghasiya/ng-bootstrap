@@ -1,128 +1,110 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8" style="width: 100%;">
-            <button class="btn btn-lg btn-outline-primary" (click)="open(content);">Add New</button>
-          <br /><br />
-          <div class="table-responsive">
-            <table id="mytable" class="table table-bordred table-striped">
-              <thead>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Hobbies</th>
-                <th>Gender</th>
-                <th>City</th>
-                <th>Age</th>            
-                <th>Action</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of studentList">
-                  <td>{{item.firstName}}</td>
-                  <td>{{item.lastName}}</td>
-                  <td>{{item.hobbies}}</td>
-                  <td>{{item.gender}}</td>              
-                  <td>{{item.city}}</td> 
-                  <td>{{item.age}}</td> 
-                  <td><button class="btn  btn-outline-primary" data-toggle="modal" (click)="open(content); editStudent(item._id)">Edit</button></td>
-                  <td><button class="btn  btn-outline-primary" (click)="deleteStudent(item._id)" >Delete</button></td>
-                </tr>
-              </tbody>
-            </table>
-    
-          </div>
-        </div>
-      </div>
+<!-- Button trigger modal -->
+<div class="container text-center mt-2">
+  <button type="button" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="btnclick()" >
+      Add Data
+      </button>
 </div>
-
- <!-- -----------------------Form------------------------ -->
- <ng-template #content let-modal >
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Student Details</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-        <form class="px-4 py-3" [formGroup]="studentData" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="">First Name:</label>
-              <input type="text" class="form-control"  value="firstName" formControlName="firstName"  id="firstName" placeholder="firstName" autocomplete="">
-            </div>
-            <div class="mb-3">
-                <label for="">Last Name</label>
-                <input type="text" class="form-control"   value="lastName" formControlName="lastName" id="lastName" placeholder="lastName" autocomplete="">
-            </div>
-            <div class="mb-3">
-                <label for="">Hobbies:</label>
-                <!-- <div class="form-check form-check-inline">
-                    <input
-                      mdbCheckbox
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox1"
-                      value="sports"
-                      formControlName="sports"
-                    />
-                    <label class="form-check-label" for="inlineCheckbox1">Sports</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      mdbCheckbox
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox2"
-                      value="playing"
-                      formControlName="playing"
-                    />
-                    <label class="form-check-label" for="inlineCheckbox2">Playing</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      mdbCheckbox
-                      class="form-check-input"
-                      type="checkbox"
-                      id="inlineCheckbox3"
-                      value="music"
-                      formControlName="music"
-                    />
-                    <label class="form-check-label" for="inlineCheckbox3">Music</label>
-                  </div> -->
-                  <div *ngFor="let hobbies of hobbies">
-                    <input type="checkbox" formControlName="hobbies" value="hobbies">
-                    <span>{{hobbies}}</span>
-                </div>
-            </div>
-            <div class="mb-3">
-              <label for="">Age</label>
-              <input type="number" class="form-control" value="age" formControlName="age" id="age" placeholder="Age" autocomplete="">
+<!-- Modal start -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Form</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-            <div class="mb-3">
-                <label for="">Gender:</label>
-                <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="Female" name="gender" value="Female" mdbInput>
-                    <label class="custom-control-label" for="Female">Female</label>
-                  </div>
-                  <!-- Default checked -->
-                  <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" formControlName="gender" id="Male" name="gender" value="Male" checked mdbInput>
-                    <label class="custom-control-label" for="Male">Male</label>
-                  </div>
-            </div>
-            <div class="mb-3">
-                <label for="">City:</label>
-                <select class="browser-default custom-select form-control" formControlName="city">
-                    <option selected>City</option>
-                    <option value="surat">surat</option>
-                    <option value="vadodara">vadodara</option>
-                    <option value="ahmedabad">ahmedabad</option>
-                  </select>
-                
-            </div>
-
-           
-     
-          </form>
-    </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="addStudent(); modal.close('Save click')">save</button>
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">cancle</button>
-    </div>
-  </ng-template>
-  
+          <div class="modal-body">
+              <!-- -- form -- -->
+              <section class="container">
+                  <form [formGroup]="userForm">
+                      <div class="form-group">
+                          <label>First Name : </label>
+                          <input type="text" class="form-control" name="firstName" formControlName="firstName" required autocomplete="off">
+                          <span class="text-danger" *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.errors?.['required']">Please enter youe first name.</span>
+                      </div>
+                      <div class="form-group">
+                          <label>Last Name : </label>
+                          <input type="text" class="form-control" name="lastName" formControlName="lastName" required autocomplete="off">
+                          <span class="text-danger" *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.errors?.['required']">Please enter youe lastName.</span>
+                      </div>
+                      <div class="form-group">
+                          <label>Age :</label>
+                          <input type="number" class="form-control" name="age" formControlName="age" min="18" autocomplete="off" required>
+                          <span class="text-danger" *ngIf="userForm.get('age')?.touched && userForm.get('age')?.errors?.['required']">please enter your age.</span>
+                          <span class="text-danger" *ngIf="userForm.get('age')?.touched && userForm.get('age')?.errors?.['min']">please enter your age more than 18.</span>
+                      </div>
+                      <div class="form-group form-control mt-3">
+                          <label class="me-3">Gender :</label>
+                          <input type="radio" name="gender" formControlName="gender" class="mx-2" value="male">Male
+                          <input type="radio" name="gender" formControlName="gender" class="mx-2" value="female">Female
+                          <input type="radio" name="gender" formControlName="gender" class="mx-2" value="other">Other
+                      </div>
+                      <!-- <div class="form-group form-control mt-3">
+                          <label class="me-3">Hobbies :</label>
+                          <input type="checkbox" class="mx-2" value="Reading" name="hobbies" (change)="changehobbies($event)" [checked]="userhobbies.includes('Reading')">Reading
+                          <input type="checkbox" class="mx-2" value="Travelling" name="hobbies" (change)="changehobbies($event)" [checked]="userhobbies.includes('Travelling')">Travelling
+                          <input type="checkbox" class="mx-2" value="Exersice" name="hobbies" (change)="changehobbies($event)" [checked]="userhobbies.includes('Exersice')">Exersice
+                      </div> -->
+                      <div class="form-group form-control mt-3">
+                          <label class="me-3">Hobbies :</label>
+                          <input type="checkbox" class="mx-2" (change)="hobbiesChanged($event)" name="hobbies" [checked]="userHobbies.includes('Reading')" value="Reading">Reading
+                          <input type="checkbox" class="mx-2" (change)="hobbiesChanged($event)" name="hobbies" [checked]="userHobbies.includes('Travelling')" value="Travelling">Travelling
+                          <br>
+                          <input type="checkbox" class="mx-2 ms-5" style=" margin-left: 5.6rem !important;" (change)="hobbiesChanged($event)" name="hobbies" [checked]="userHobbies.includes('Exersice')" value="Exersice">Exersice
+                          <input type="checkbox" class="mx-2" (change)="hobbiesChanged($event)" name="hobbies" [checked]="userHobbies.includes('Writing')" value="Writing">Writing
+                      </div>
+                      <div class="form-group form-control mt-3">
+                          <label>City : </label>
+                          <select class="mx-3" name="city" formControlName="city">
+                                              <option value="Surat">Surat</option>
+                                              <option value="Kerela">Kerela</option>
+                                              <option value="Delhi">Delhi</option>
+                                              <option value="Nainital">Nainital</option>
+                                              <option value="Manali">Manali</option>
+                                              <option value="Goa">Goa</option>
+                                              <option value="Other">Other</option>
+                                          </select>
+                      </div>
+                      <div class="form-group">
+                          <button class="btn btn-success mt-4" type="submit" (click)="saveData()" data-bs-dismiss="modal" [disabled]="!userForm.valid">Submit</button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+              </section>
+          </div>
+         
+      </div>
+  </div>
+</div>
+<!-- -- model over --- -->
+<!-- =========== table ============ -->
+<section class="container">
+  <table class="table  table-hover table-responsive mt-5">
+      <thead>
+          <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Hobbies</th>
+              <th>City</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of userData">
+              <td>{{ item.firstName }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ item.gender }}</td>
+              <td>{{ item.hobbies }}</td>
+              <td>{{ item.city }}</td>
+              <td>
+                  <button class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editData(item)">edit</button>
+                  <button class="btn btn-danger mx-1" (click)="deleteData(item._id)">delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</section>
