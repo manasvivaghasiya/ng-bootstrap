@@ -61,23 +61,23 @@ getdetails(){
 }
 
 // editData
-editData(payload:any){
+editData(data:any){
   this.userForm.patchValue({
-    firstName : payload.firstName,
-    lastName : payload.lastName,
-    gender : payload.gender,
-    age : payload.age,
-    city : payload.city,
-    id : payload._id,
+    firstName : data.firstName,
+    lastName : data.lastName,
+    gender : data.gender,
+    age : data.age,
+    city : data.city,
+    id : data._id,
   });
-  if(payload.hobbies){
-    this.userHobbies = payload.hobbies.split(',')
+  if(data.hobbies){
+    this.userHobbies = data.hobbies.split(',')
   }
 }
 
 // add data
 addData(){
-  const payload = {
+  const data = {
     "firstName" : this.userForm.value.firstName,
     "lastName" : this.userForm.value.lastName,
     "gender" : this.userForm.value.gender,
@@ -86,7 +86,7 @@ addData(){
     "id" : this.userForm.value.id,
     "hobbies" : this.userHobbies.join(',')
   }
-  this.httpclient.post(`${environment.apiProduct}/student/add`,payload)
+  this.httpclient.post(`${environment.apiProduct}/student/add`,data)
   .subscribe((res:any)=>{
     if(res.isSuccess){
       this.getdetails()
@@ -104,7 +104,7 @@ btnclick(){
 }
 // update data
 updateData(){
-  const payload = {
+  const data = {
     "firstName" : this.userForm.value.firstName,
     "lastName" : this.userForm.value.lastName,
     "gender" : this.userForm.value.gender,
@@ -113,7 +113,7 @@ updateData(){
     "id" : this.userForm.value.id,
     "hobbies" : this.userHobbies.join(',')
   }
-  this.httpclient.post(`${environment.apiProduct}/student/update`,payload)
+  this.httpclient.post(`${environment.apiProduct}/student/update`,data)
   .subscribe((res:any)=>{
     if(res.isSuccess){
       this.getdetails()

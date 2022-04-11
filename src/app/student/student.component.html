@@ -56,18 +56,19 @@
                           <label>City : </label>
                           <select class="mx-3" name="city" formControlName="city">
                                               <option value="Surat">Surat</option>
-                                              <option value="Kerela">Kerela</option>
+                                              <option value="Kerela">pune</option>
                                               <option value="Delhi">Delhi</option>
-                                              <option value="Nainital">Nainital</option>
+                                              <option value="Nainital">Mumbai</option>
                                               <option value="Manali">Manali</option>
                                               <option value="Goa">Goa</option>
                                               <option value="Other">Other</option>
                                           </select>
                       </div>
                       <div class="form-group">
-                          <button class="btn btn-success mt-4" type="submit" (click)="saveData()" data-bs-dismiss="modal" [disabled]="!userForm.valid">Submit</button>
                       </div>
                       <div class="modal-footer">
+                        <button class="btn btn-success" type="submit" (click)="saveData()" data-bs-dismiss="modal" [disabled]="!userForm.valid">Submit</button>
+
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </form>
